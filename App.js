@@ -1,41 +1,48 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+import React, { Component } from 'react';
 import {
-  View,
-  Text,
-  Image,
-  Dimensions,
-  FlatList
+  FlatList,
+  StyleSheet
 } from 'react-native';
+import Post from './src/components/Post';
 
-const width = Dimensions.get('screen').width;
+class App extends Component {
 
-const fotos = [
-  { id: 1, usuario: 'Alexandre Teixeira' },
-  { id: 2, usuario: 'Teste 1' },
-  { id: 3, usuario: 'Teste 2' }
-];
+  constructor() {
+    super();
+    this.state = {
+      fotos: []
+    }
+  }
 
-const App: () => React$Node = () => {
-  return (
-    <FlatList style={{ marginTop: 20 }}
-      data={fotos}
-      keyExtractor={item => item.id}
-      renderItem={({ item }) =>
-        <View>
-          <Text>{item.usuario}</Text>
-          <Image source={require('./resources/img/rhcp.jpeg')} style={{ width: width, height: width }} />
-        </View>
-      }
-    />
-  );
-};
+  componentDidMount() {
+    fetch('http://localhost:8080/api/public/fotos/rafael')
+      .then(resposta => {
+        console.log(resposta)
+        resposta.json();
+      })
+      .then(json => this.setState({ fotos: json }))
+      .catch(error => { 
+        console.log(error) 
+      });
+  }
+
+  render() {
+    return (
+      <FlatList style={styles.container}
+        keyExtractor={item => item.id}
+        data={this.state.fotos}
+        renderItem={({ item }) =>
+          <Post foto={item} />
+        }
+      ></FlatList>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 20
+  }
+});
 
 export default App;
