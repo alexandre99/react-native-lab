@@ -12,7 +12,8 @@ import {
   Text,
   Image,
   Dimensions,
-  FlatList
+  FlatList,
+  StyleSheet
 } from 'react-native';
 
 const width = Dimensions.get('screen').width;
@@ -25,17 +26,42 @@ const fotos = [
 
 const App: () => React$Node = () => {
   return (
-    <FlatList style={{ marginTop: 20 }}
+    <FlatList style={styles.container}
       data={fotos}
       keyExtractor={item => item.id}
       renderItem={({ item }) =>
         <View>
-          <Text>{item.usuario}</Text>
-          <Image source={require('./resources/img/rhcp.jpeg')} style={{ width: width, height: width }} />
+          <View style={styles.cabecalho}>
+            <Image source={require('./resources/img/rhcp.jpeg')}
+              style={styles.fotoDePerfil} />
+            <Text>{item.usuario}</Text>
+          </View>
+          <Image source={require('./resources/img/rhcp.jpeg')}
+            style={styles.foto} />
         </View>
       }
-    />
+    ></FlatList>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 20
+  },
+  cabecalho: {
+    margin: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  fotoDePerfil: {
+    marginRight: 10,
+    borderRadius: 20,
+    width: 40, height: 40
+  },
+  foto: {
+    width: width,
+    height: width
+  }
+})
 
 export default App;
