@@ -4,6 +4,7 @@ import {
   StyleSheet
 } from 'react-native';
 import Post from './src/components/Post';
+import Config from 'react-native-config'
 
 class App extends Component {
 
@@ -15,11 +16,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/api/public/fotos/rafael')
-      .then(resposta => {
-        console.log(resposta)
-        resposta.json();
-      })
+    console.log('Config carregada:' + Config.URL);
+    fetch(Config.URL)
+      .then(resposta => resposta.json())
       .then(json => this.setState({ fotos: json }))
       .catch(error => { 
         console.log(error) 
