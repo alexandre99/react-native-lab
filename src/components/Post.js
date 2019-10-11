@@ -9,13 +9,15 @@ import {
   TextInput
 } from 'react-native';
 
+import InputComentario from './InputComentario';
+
 const width = Dimensions.get('screen').width;
 
 export default class Post extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { foto: this.props.foto, valorComentario: '' }
+    this.state = { foto: this.props.foto }
   }
 
   carregaIcone(likeada) {
@@ -63,29 +65,25 @@ export default class Post extends Component {
     );
   }
 
-  adicionaComentario() {
-    const {foto, valorComentario } = this.state;
-    if (!valorComentario)
+  adicionaComentario(valorComentario, inputComentario) {
+    if (valorComentario === '')
       return;
 
-    const novaLista = [
-      ...foto.comentarios,
-      {
-        id: valorComentario,
-        login: 'meuUsuario',
-        texto: valorComentario
-      }
-    ];
+    const novaLista = [...this.state.foto.comentarios, {
+      id: valorComentario,
+      login: 'meuUsuario',
+      texto: valorComentario
+    }];
 
     const fotoAtualizada = {
-      ...foto,
+      ...this.state.foto,
       comentarios: novaLista
     }
 
-    this.setState({ foto: fotoAtualizada, valorComentario: '' });
-    this.inputComentario.clear();
-  }
+    this.setState({ foto: fotoAtualizada });
+    inputComentario.clear();
 
+  }
   render() {
     const { foto } = this.state;
 
@@ -108,14 +106,7 @@ export default class Post extends Component {
               <Text>{comentario.texto}</Text>
             </View>
           )}
-          <View style={styles.novoComentario}>
-            <TextInput style={styles.input} placeholder="Adicione um comentário..."
-              ref={input => this.inputComentario = input}
-              onChangeText={texto => this.setState({ valorComentario: texto })} />
-            <TouchableOpacity onPress={this.adicionaComentario.bind(this)}>
-              <Image style={styles.icone} source={require('../../resources/img/send.png')} />
-            </TouchableOpacity>
-          </View>
+          <InputComentario comentarioCallback={this.adicionaComentario.bind(this)} />
         </View>
       </View>
     );
@@ -154,19 +145,5 @@ const styles = StyleSheet.create({
   tituloComentario: {
     fontWeight: 'bold',
     marginRight: 5
-  },
-  input: {
-    flex: 1,
-    height: 40
-  },
-  novoComentario: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  icone: {
-    width: 30,
-    height: 30
   }
 })

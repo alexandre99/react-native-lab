@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   FlatList,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 import Post from './src/components/Post';
 import Config from 'react-native-config'
@@ -28,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <FlatList style={styles.container}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         data={this.state.fotos}
         renderItem={({ item }) =>
           <Post foto={item} />
@@ -38,9 +39,11 @@ class App extends Component {
   }
 }
 
+const margem = Platform.OS === 'ios' ? 20 : 0;
+
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20
+    marginTop: margem
   }
 });
 
