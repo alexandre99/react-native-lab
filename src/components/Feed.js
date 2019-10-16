@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {
-  FlatList,
   StyleSheet,
+  FlatList,
   Platform
 } from 'react-native';
-import Post from './src/components/Post';
-import Config from 'react-native-config'
+import Post from './components/Post';
 
-class App extends Component {
+export default class Feed extends Component {
 
   constructor() {
     super();
@@ -21,8 +20,8 @@ class App extends Component {
     fetch(Config.URL)
       .then(resposta => resposta.json())
       .then(json => this.setState({ fotos: json }))
-      .catch(error => { 
-        console.log(error) 
+      .catch(error => {
+        console.log(error)
       });
   }
 
@@ -46,5 +45,3 @@ const styles = StyleSheet.create({
     marginTop: margem
   }
 });
-
-export default App;
