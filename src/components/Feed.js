@@ -19,8 +19,8 @@ export default class Feed extends Component {
   }
 
   componentDidMount() {
-    console.log('Config carregada:' + Config.URL);
-    fetch(Config.URL)
+    console.log('Config carregada:' + Config.BASE_URL);
+    fetch(`${Config.BASE_URL}public/fotos/alots`)
       .then(resposta => resposta.json())
       .then(json => this.setState({ fotos: json }))
       .catch(error => {
