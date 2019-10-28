@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 
 import Config from 'react-native-config';
+import { Navigation } from 'react-native-navigation';
 
 const width = Dimensions.get('screen').width;
 
 export default class Login extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       usuario: '',
       senha: '',
@@ -48,6 +49,25 @@ export default class Login extends Component {
       .then(token => {
         AsyncStorage.setItem('token', token);
         AsyncStorage.setItem('usuario', this.state.usuario);
+
+        Navigation.setStackRoot(this.props.componentId, [
+          {
+            component: {
+              id: 'Feed',
+              name: 'Feed',
+              options: {
+                animations: {
+                  setStackRoot: {
+                    enabled: true
+                  },
+                  topBar: {
+                    visible: false
+                  }
+                }
+              }
+            }
+          }
+        ]);
 
       })
       .catch(e => this.setState({ mensagem: e.message }));

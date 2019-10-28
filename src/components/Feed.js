@@ -4,10 +4,8 @@ import {
   FlatList,
   Platform
 } from 'react-native';
-import Post from './components/Post';
-import { FlatList, Platform, StyleSheet } from 'react-native';
+import Post from './Post';
 import Config from 'react-native-config';
-import Post from './src/components/Post';
 
 export default class Feed extends Component {
 

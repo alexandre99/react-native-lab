@@ -1,9 +1,23 @@
-/**
- * @format
- */
+import { Navigation } from 'react-native-navigation';
+import Login from './src/components/Login';
+import Feed from './src/components/Feed';
 
-import {AppRegistry} from 'react-native';
-import Login from './src/components/Login'
-import {name as appName} from './app.json';
+Navigation.registerComponent('Login', () => Login);
+Navigation.registerComponent('Feed', () => Feed);
 
-AppRegistry.registerComponent(appName, () => Login);
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              id: 'Login',
+              name: 'Login'
+            }
+          }
+        ],
+      }
+    }
+  });
+});
