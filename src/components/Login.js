@@ -11,6 +11,7 @@ import {
 
 import Config from 'react-native-config';
 import { Navigation } from 'react-native-navigation';
+import feedLayout from '../layouts/FeedLayout';
 
 const width = Dimensions.get('screen').width;
 
@@ -52,20 +53,7 @@ export default class Login extends Component {
 
         Navigation.setStackRoot(this.props.componentId, [
           {
-            component: {
-              id: 'Feed',
-              name: 'Feed',
-              options: {
-                animations: {
-                  setStackRoot: {
-                    enabled: true
-                  },
-                  topBar: {
-                    visible: false
-                  }
-                }
-              }
-            }
+            component: feedLayout()
           }
         ]);
 
